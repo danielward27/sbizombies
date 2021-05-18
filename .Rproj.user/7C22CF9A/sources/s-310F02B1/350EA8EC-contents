@@ -1,1 +1,0 @@
-Rcpp::loadModule("double_cpp", TRUE)

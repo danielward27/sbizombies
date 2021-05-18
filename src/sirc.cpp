@@ -66,7 +66,7 @@ NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R
     
     X(i,_) =  IR[Range(0,2*Ia.size())];
     
-    n = Ia.size();
+    n = 2*Ia.size();
   
     }
 

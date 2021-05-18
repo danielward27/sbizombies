@@ -28,22 +28,19 @@ BEGIN_RCPP
 END_RCPP
 }
 // sirc
-NumericVector sirc(double beta, double gamma, double iota, double N, double S0, double I0, double R0, double tf, bool initial, int Nruns);
-RcppExport SEXP _sbizombies_sirc(SEXP betaSEXP, SEXP gammaSEXP, SEXP iotaSEXP, SEXP NSEXP, SEXP S0SEXP, SEXP I0SEXP, SEXP R0SEXP, SEXP tfSEXP, SEXP initialSEXP, SEXP NrunsSEXP) {
+NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R0, double tf, bool initial);
+RcppExport SEXP _sbizombies_sirc(SEXP thetaSEXP, SEXP NSEXP, SEXP S0SEXP, SEXP I0SEXP, SEXP R0SEXP, SEXP tfSEXP, SEXP initialSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< double >::type iota(iotaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type theta(thetaSEXP);
     Rcpp::traits::input_parameter< double >::type N(NSEXP);
     Rcpp::traits::input_parameter< double >::type S0(S0SEXP);
     Rcpp::traits::input_parameter< double >::type I0(I0SEXP);
     Rcpp::traits::input_parameter< double >::type R0(R0SEXP);
     Rcpp::traits::input_parameter< double >::type tf(tfSEXP);
     Rcpp::traits::input_parameter< bool >::type initial(initialSEXP);
-    Rcpp::traits::input_parameter< int >::type Nruns(NrunsSEXP);
-    rcpp_result_gen = Rcpp::wrap(sirc(beta, gamma, iota, N, S0, I0, R0, tf, initial, Nruns));
+    rcpp_result_gen = Rcpp::wrap(sirc(theta, N, S0, I0, R0, tf, initial));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -51,7 +48,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_sbizombies_distance", (DL_FUNC) &_sbizombies_distance, 2},
     {"_sbizombies_rcpp_hello_world", (DL_FUNC) &_sbizombies_rcpp_hello_world, 0},
-    {"_sbizombies_sirc", (DL_FUNC) &_sbizombies_sirc, 10},
+    {"_sbizombies_sirc", (DL_FUNC) &_sbizombies_sirc, 7},
     {NULL, NULL, 0}
 };
 

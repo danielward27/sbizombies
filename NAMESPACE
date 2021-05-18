@@ -1,3 +1,4 @@
 useDynLib(sbizombies, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
+importFrom("stats", "quantile", "sd", "simulate", "time")
 exportPattern("^[[:alpha:]]+")

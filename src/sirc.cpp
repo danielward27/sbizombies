@@ -19,7 +19,7 @@ NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R
     double gamma = theta(i,1);
     double iota = theta(i,2);
   
-    double t = 0;
+    double t = 1;
     double S = S0;
     double I = I0;
     double R = R0;
@@ -64,11 +64,16 @@ NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R
       IR.insert(j+Ia.size(),Ra[j]);
     }
     
+    std::cout<<Ia.size()<<std::endl;
+    std::cout<<Ra.size()<<std::endl;
+      
+    
     X(i,_) =  IR[Range(0,2*Ia.size())];
     
     n = 2*Ia.size();
   
     }
 
-  return X(_,Range(0,n));
+    std::cout<<n<<std::endl;
+  return X(_,Range(0,n-1));
 }

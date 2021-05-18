@@ -28,8 +28,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // sirc
-List sirc(double beta, double gamma, double iota, double N, double S0, double I0, double R0, double tf, bool initial);
-RcppExport SEXP _sbizombies_sirc(SEXP betaSEXP, SEXP gammaSEXP, SEXP iotaSEXP, SEXP NSEXP, SEXP S0SEXP, SEXP I0SEXP, SEXP R0SEXP, SEXP tfSEXP, SEXP initialSEXP) {
+NumericVector sirc(double beta, double gamma, double iota, double N, double S0, double I0, double R0, double tf, bool initial, int Nruns);
+RcppExport SEXP _sbizombies_sirc(SEXP betaSEXP, SEXP gammaSEXP, SEXP iotaSEXP, SEXP NSEXP, SEXP S0SEXP, SEXP I0SEXP, SEXP R0SEXP, SEXP tfSEXP, SEXP initialSEXP, SEXP NrunsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -42,7 +42,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type R0(R0SEXP);
     Rcpp::traits::input_parameter< double >::type tf(tfSEXP);
     Rcpp::traits::input_parameter< bool >::type initial(initialSEXP);
-    rcpp_result_gen = Rcpp::wrap(sirc(beta, gamma, iota, N, S0, I0, R0, tf, initial));
+    Rcpp::traits::input_parameter< int >::type Nruns(NrunsSEXP);
+    rcpp_result_gen = Rcpp::wrap(sirc(beta, gamma, iota, N, S0, I0, R0, tf, initial, Nruns));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -50,7 +51,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_sbizombies_distance", (DL_FUNC) &_sbizombies_distance, 2},
     {"_sbizombies_rcpp_hello_world", (DL_FUNC) &_sbizombies_rcpp_hello_world, 0},
-    {"_sbizombies_sirc", (DL_FUNC) &_sbizombies_sirc, 9},
+    {"_sbizombies_sirc", (DL_FUNC) &_sbizombies_sirc, 10},
     {NULL, NULL, 0}
 };
 

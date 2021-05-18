@@ -2,16 +2,23 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List sirc(double beta, double gamma, double iota, double N, double S0, double I0, double R0, double tf, bool initial){
+NumericVector sirc(double beta, double gamma, double iota, double N, double S0, double I0, double R0, double tf, bool initial = true, int Nruns = 1){
+  
+  //initialise matrix tf by nruns
+  
+  // NumericMatrix X;
+  // 
+  // for (int i = 0; i < Nruns; i++){
   
   double t = 0;
   double S = S0;
   double I = I0;
   double R = R0;
-  std::vector<double> ta;
-  std::vector<double> Sa;
-  std::vector<double> Ia;
-  std::vector<double> Ra;
+  NumericVector ta;
+  NumericVector Sa;
+  NumericVector Ia;
+  NumericVector Ra;
+  
   
   
   do{
@@ -36,5 +43,26 @@ List sirc(double beta, double gamma, double iota, double N, double S0, double I0
     }
     
   } while (t<=tf );
-  return List::create(_["time"] = ta, _["S"] = Sa, _["I"] = Ia, _["R"]=Ra);
+  
+  NumericVector IR(Ia.size() + Ra.size()); // preallocate memory
+  
+  for(int i= 0; i < Ia.size(); i++ ){
+    
+    IR.insert(i,Ia[i]);
+  }
+  
+  for(int i= 0; i < Ra.size(); i++ ){
+    
+    IR.insert(i+Ia.size(),Ra[i]);
+  }
+  // IR.insert( IR.end(), Ia.begin(), Ia.end() );
+  // IR.insert( IR.end(), Ra.begin(), Ra.end() );
+  
+  // std::copy(Ia.begin(), Ia.end(), IR.begin() + index);
+  
+  //   X.push_back(IR);
+  // } 
+  
+  
+  return IR;
 }

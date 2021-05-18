@@ -10,7 +10,7 @@ rcpp_hello_world <- function() {
     .Call(`_sbizombies_rcpp_hello_world`)
 }
 
-sirc <- function(beta, gamma, iota, N, S0, I0, R0, tf, initial) {
-    .Call(`_sbizombies_sirc`, beta, gamma, iota, N, S0, I0, R0, tf, initial)
+sirc <- function(beta, gamma, iota, N, S0, I0, R0, tf, initial = TRUE, Nruns = 1L) {
+    .Call(`_sbizombies_sirc`, beta, gamma, iota, N, S0, I0, R0, tf, initial, Nruns)
 }
 

@@ -1,30 +1,26 @@
 library(Rcpp)
 
 cppFunction(
-  "double temp(int n, int m) {
+  "NumericMatrix temp(NumericVector obs, int N) {
     
-    NumericMatrix chain(n, m);
-    NumericVector temp(m);
-    double temp_mean;
+    double obs_ss = mean(obs);
+  
+    int length_theta = obs.size();
+    NumericMatrix chain(N, length_theta);
+    NumericVector update(length_theta);
+    update = rnorm(length_theta, 1, 1);
+  
+    chain(0 , _) = update;
     
     
-    chain(0 , _) = rnorm(m);
-    
-    for (int i = 0; i < (n-1); i++) {
-      temp_mean = mean( chain(i , _) );
-      chain(i+1 , _) = rnorm(m, temp_mean, 1);
+    NumericVector prop(length_theta);
+    for (int i = 1; i < (N-1); i++) {
+      prop = 
     }
         
 
-    return temp_mean;
+    return chain;
   }"
 )
 
-temp(10,15)
-
-for (int i = 0; i < n; i++) {
-  calc_mean = mean(temp);
-  temp = chain(i , _);
-  calc_mean = mean(temp);
-  chain(i+1 , _) = rnorm(m, calc_mean, 1);
-}
+temp(rnorm(21,0,1),10)

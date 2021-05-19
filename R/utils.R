@@ -21,6 +21,11 @@ mean_and_sd = function(s){
 scaler = function(s, mean_and_sd){
   means = mean_and_sd$mean
   sds = mean_and_sd$sd
+  
+  if (all.equal(min(sds), 0)){
+    stop("Cannot scale with standard deviation of zero.")
+  }
+  
   if (is.matrix(s)){
     result = t((t(s) - means)/sds)
   }

@@ -13,3 +13,10 @@ test_that("Scaler", {
   s_scaled = scaler(s_obs, m_sd)
   all.equal(s_scaled, -(m_sd$mean)/m_sd$sd)
 })
+
+test_that("Scaler throws error with zero variance", {
+  # test scaler on matrix
+  s = cbind(1, s)
+  m_sd = mean_and_sd(s)
+  expect_error(scaler(s, m_sd))
+})

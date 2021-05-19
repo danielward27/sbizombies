@@ -2,10 +2,20 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R0, double tf, bool initial = true){
+NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial = true){
   
+  double S0 = N - 1;
+  double I0 = 1;
+  double R0 = 0;
   
   int Nruns = theta.nrow();
+  
+  if(Nruns>1 && initial == true){
+    
+    throw std::invalid_argument("initial run must have only one set of parameters");
+    
+    return -1;
+  }
   
   NumericVector IR;
   
@@ -72,3 +82,16 @@ NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R
 
   return X(_,Range(0,n-1));
 }
+
+/*** R
+# initial
+theta = matrix(c(0.1,0.05,0.1),nrow=1)
+sirc(theta,1000,500)
+## training
+theta = matrix(runif(9),nrow=3)
+sirc(theta,1000,50,initial = F)
+*/
+
+
+
+

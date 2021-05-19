@@ -2,7 +2,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial = true){
+NumericMatrix szr(NumericMatrix theta, double N, double tf, bool initial = true){
 
 // initialising variables
       
@@ -107,10 +107,10 @@ NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial = true
 /*** R
 # initial
 theta = matrix(c(0.1,0.05),nrow=1)
-sirc(theta,1000,500)
+szr(theta,1000,500)
 ## training
 theta = matrix(runif(4),nrow=2)
-sirc(theta,1000,50,initial = F)
+szr(theta,1000,50,initial = F)
 */
 
 

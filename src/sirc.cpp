@@ -35,7 +35,6 @@ NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial = true
   
     double beta = theta(i,0);
     double gamma = theta(i,1);
-    double iota = theta(i,2);
   
     double t = 1;
     double S = S0;
@@ -58,7 +57,7 @@ NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial = true
       
       // calculate the updates
       
-      double lambd = beta*(I+iota)/N;
+      double lambd = beta*I/N;
       double ifrac = 1.0 -exp(-lambd);
       double rfrac = 1.0 - exp(-gamma);
       double  infection = as<double>(rbinom(1,S,ifrac));
@@ -105,13 +104,12 @@ NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial = true
 }
 
 
-
 /*** R
 # initial
-theta = matrix(c(0.1,0.05,0.1),nrow=1)
+theta = matrix(c(0.1,0.05),nrow=1)
 sirc(theta,1000,500)
 ## training
-theta = matrix(runif(9),nrow=3)
+theta = matrix(runif(4),nrow=2)
 sirc(theta,1000,50,initial = F)
 */
 

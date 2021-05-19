@@ -66,9 +66,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// sirc
-NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial);
-RcppExport SEXP _sbizombies_sirc(SEXP thetaSEXP, SEXP NSEXP, SEXP tfSEXP, SEXP initialSEXP) {
+// szr
+NumericMatrix szr(NumericMatrix theta, double N, double tf, bool initial);
+RcppExport SEXP _sbizombies_szr(SEXP thetaSEXP, SEXP NSEXP, SEXP tfSEXP, SEXP initialSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -76,7 +76,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type N(NSEXP);
     Rcpp::traits::input_parameter< double >::type tf(tfSEXP);
     Rcpp::traits::input_parameter< bool >::type initial(initialSEXP);
-    rcpp_result_gen = Rcpp::wrap(sirc(theta, N, tf, initial));
+    rcpp_result_gen = Rcpp::wrap(szr(theta, N, tf, initial));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -87,7 +87,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sbizombies_dprior", (DL_FUNC) &_sbizombies_dprior, 2},
     {"_sbizombies_prop_mech", (DL_FUNC) &_sbizombies_prop_mech, 2},
     {"_sbizombies_rcpp_hello_world", (DL_FUNC) &_sbizombies_rcpp_hello_world, 0},
-    {"_sbizombies_sirc", (DL_FUNC) &_sbizombies_sirc, 4},
+    {"_sbizombies_szr", (DL_FUNC) &_sbizombies_szr, 4},
     {NULL, NULL, 0}
 };
 

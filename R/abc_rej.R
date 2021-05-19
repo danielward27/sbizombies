@@ -1,23 +1,25 @@
+
+#' Rejection ABC
+#' @param prior Matrix of parameters from the prior
+#' @param s Matrix of corresponding summary statistics
+#' @param obs Vector of observed summary statistics
+#' @param q Distance quantile under which simulations are excepted
 #' @export
-abc_rej = function(obs, N, simulator, prior, summary, quant) {
+abc_rej = function(prior, s, s_obs, q = 0.01) {
+  stopifnot(nrow(prior) == nrow(s))
+  stopifnot(length(s_obs) == ncol(s))
   
-  #transform observed
-  obs_ss = summary(obs)
+  # Scale summary statistics
+  scale_out = mean_and_sd(s)
+  s_scaled = scaler(s, scale_out)
+  s_obs_scaled = scaler(s_obs, scale_out)
   
-  abc_params = prior(N) #generate params to simulate with
-  abc_simuls = simulator(abc_params) #generate the respective simulations
-  abc_ss = summary(abc_simuls) #generate summary statistics
-  
-  scale_out = mean_and_sd(abc_ss) #find scaling
-  #apply scaling
-  abc_ss_scale = scale(abc_ss, scale_out)
-  obs_ss_scale = scale(obs_ss, scale_out)
-  
-  abc_dists = distance(abc_ss_scale, obs_ss_scale) #find distances
-  
-  ep = as.numeric(quantile(abc_dists, quant)) #e.g. quant = 0.01
-  abc_accp = (abc_dists < ep)
-  
-  return(abc_params[abc_accp])
-  
+  # Calculate dists and reject
+  dists = distance(s_scaled, s_obs_scaled)
+  threshold_dist = quantile(dists, q)
+  accept = dists < threshold_dist
+  result = list(posterior = prior[accept, ],
+                s = s[accept, ],
+                threshold_used = threshold_dist)
+  result
 }

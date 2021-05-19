@@ -64,16 +64,11 @@ NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R
       IR.insert(j+Ia.size(),Ra[j]);
     }
     
-    std::cout<<Ia.size()<<std::endl;
-    std::cout<<Ra.size()<<std::endl;
-      
-    
     X(i,_) =  IR[Range(0,2*Ia.size())];
     
     n = 2*Ia.size();
   
     }
 
-    std::cout<<n<<std::endl;
   return X(_,Range(0,n-1));
 }

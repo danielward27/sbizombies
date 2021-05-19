@@ -6,13 +6,20 @@ if (is.na(pbs_idx)){
 }
 
 
+devtools::load_all("..")
+
+for (i in 1:100){
+  theta = tc(beta = runif(0,3), gamma = runif(0,3))  
+  result = szr(theta, N = 1000, tf=1000)
+}
+
 
 
 abc_rej()
 
 n = 1
 beta = runif(0, 3)
-gamma = runif(100)
+gamma = runif(0, 1)
 
 
 

@@ -22,7 +22,7 @@ rcpp_hello_world <- function() {
     .Call(`_sbizombies_rcpp_hello_world`)
 }
 
-sirc <- function(theta, N, tf, initial = TRUE) {
-    .Call(`_sbizombies_sirc`, theta, N, tf, initial)
+szr <- function(theta, N, tf, initial = TRUE) {
+    .Call(`_sbizombies_szr`, theta, N, tf, initial)
 }
 

@@ -5,6 +5,21 @@
 
 using namespace Rcpp;
 
+// abc_mcmc
+NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix prior_params, double epsilon);
+RcppExport SEXP _sbizombies_abc_mcmc(SEXP obsSEXP, SEXP NSEXP, SEXP sdSEXP, SEXP prior_paramsSEXP, SEXP epsilonSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type sd(sdSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type prior_params(prior_paramsSEXP);
+    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
+    rcpp_result_gen = Rcpp::wrap(abc_mcmc(obs, N, sd, prior_params, epsilon));
+    return rcpp_result_gen;
+END_RCPP
+}
 // distance
 NumericVector distance(NumericMatrix sims, NumericVector obs);
 RcppExport SEXP _sbizombies_distance(SEXP simsSEXP, SEXP obsSEXP) {
@@ -14,6 +29,30 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type sims(simsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
     rcpp_result_gen = Rcpp::wrap(distance(sims, obs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dprior
+double dprior(NumericVector vals, NumericMatrix params);
+RcppExport SEXP _sbizombies_dprior(SEXP valsSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type vals(valsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(dprior(vals, params));
+    return rcpp_result_gen;
+END_RCPP
+}
+// prop_mech
+NumericVector prop_mech(NumericVector old, NumericVector sd);
+RcppExport SEXP _sbizombies_prop_mech(SEXP oldSEXP, SEXP sdSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type old(oldSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type sd(sdSEXP);
+    rcpp_result_gen = Rcpp::wrap(prop_mech(old, sd));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -28,27 +67,27 @@ BEGIN_RCPP
 END_RCPP
 }
 // sirc
-NumericMatrix sirc(NumericMatrix theta, double N, double S0, double I0, double R0, double tf, bool initial);
-RcppExport SEXP _sbizombies_sirc(SEXP thetaSEXP, SEXP NSEXP, SEXP S0SEXP, SEXP I0SEXP, SEXP R0SEXP, SEXP tfSEXP, SEXP initialSEXP) {
+NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial);
+RcppExport SEXP _sbizombies_sirc(SEXP thetaSEXP, SEXP NSEXP, SEXP tfSEXP, SEXP initialSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type theta(thetaSEXP);
     Rcpp::traits::input_parameter< double >::type N(NSEXP);
-    Rcpp::traits::input_parameter< double >::type S0(S0SEXP);
-    Rcpp::traits::input_parameter< double >::type I0(I0SEXP);
-    Rcpp::traits::input_parameter< double >::type R0(R0SEXP);
     Rcpp::traits::input_parameter< double >::type tf(tfSEXP);
     Rcpp::traits::input_parameter< bool >::type initial(initialSEXP);
-    rcpp_result_gen = Rcpp::wrap(sirc(theta, N, S0, I0, R0, tf, initial));
+    rcpp_result_gen = Rcpp::wrap(sirc(theta, N, tf, initial));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_sbizombies_abc_mcmc", (DL_FUNC) &_sbizombies_abc_mcmc, 5},
     {"_sbizombies_distance", (DL_FUNC) &_sbizombies_distance, 2},
+    {"_sbizombies_dprior", (DL_FUNC) &_sbizombies_dprior, 2},
+    {"_sbizombies_prop_mech", (DL_FUNC) &_sbizombies_prop_mech, 2},
     {"_sbizombies_rcpp_hello_world", (DL_FUNC) &_sbizombies_rcpp_hello_world, 0},
-    {"_sbizombies_sirc", (DL_FUNC) &_sbizombies_sirc, 7},
+    {"_sbizombies_sirc", (DL_FUNC) &_sbizombies_sirc, 4},
     {NULL, NULL, 0}
 };
 

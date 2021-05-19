@@ -83,6 +83,8 @@ NumericMatrix sirc(NumericMatrix theta, double N, double tf, bool initial = true
   return X(_,Range(0,n-1));
 }
 
+
+
 /*** R
 # initial
 theta = matrix(c(0.1,0.05,0.1),nrow=1)

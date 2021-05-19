@@ -8,8 +8,6 @@ NumericVector prop_mech(NumericVector old, NumericVector sd) {
   
   NumericVector out(leng);
   
-  double abc;
-  
   for (int i = 0; i < leng; i++) {
     out(i) = rnorm(1, old(i), sd(i))[0];
   }

@@ -48,6 +48,8 @@ NumericMatrix szr(NumericMatrix theta, double N, double tf, bool initial = true)
 
     do{
 
+
+
       // append the new populations to the vectors
 
       if(t>0){
@@ -55,6 +57,10 @@ NumericMatrix szr(NumericMatrix theta, double N, double tf, bool initial = true)
         Sa.push_back(S);
         Ia.push_back(I);
         Ra.push_back(R);}
+
+      if(initial == true){
+        if(I==0){break;}
+      }
 
       // calculate the updates
 
@@ -73,9 +79,7 @@ NumericMatrix szr(NumericMatrix theta, double N, double tf, bool initial = true)
 
       // conditional break on initial run
 
-      if(initial == true){
-        if(I==0){break;}
-      }
+
 
     } while (t<=tf );
 
@@ -97,23 +101,10 @@ NumericMatrix szr(NumericMatrix theta, double N, double tf, bool initial = true)
 
     X(i,_) =  IR[Range(0,2*Ia.size())];
 
+
     n = 2*Ia.size();
 
   }
 
   return X(_,Range(0,n-1));
 }
-
-
-/*** R
-# initial
-theta = matrix(c(0.1,0.05), nrow=1)
-
-for (i in 1:1000){
-  szr(theta,1000,500, FALSE)
-}
-
-## training
-theta = matrix(runif(4),nrow=2)
-szr(theta,1000,50,initial = F)
-*/

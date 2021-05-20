@@ -7,7 +7,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix prior_params, double epsilon, NumericMatrix scale_ss) {
+NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix prior_params, NumericVector epsilon, NumericMatrix scale_ss) {
 
   int tf = (obs.size()/2);
   int length_theta = 2;
@@ -70,7 +70,7 @@ NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix
 
     std::cout << dist << std::endl;
 
-    if (dist > epsilon) {
+    if (dist > epsilon(i)) {
       chain(i,_) = chain(i-1,_);
       // std::cout << "immediately rej bcoz ss" << std::endl;
     } else {
@@ -101,16 +101,16 @@ NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix
 obs = c(1,1,2,5,7,12,17,30,48,71,101,147,172,150,98,59,31,24,9,4,2,1,1,0,1,1,2,6,12,20,33,58,98,151,227,334,469,588,667,716,737,756,762,765,767,767)
 N_temp = 2.5e5
 sd = c(1,1)
+burn_in = 25000
 prior_params = matrix(c(rep(0,2), rep(5, 2)), 2, 2)
-epsilon = 1000
+epsilon = c(seq(10000,1000,length.out=burn_in), rep(1000,N_temp-burn_in))
 scale_ss = matrix(c(round(seq(2, 200, length.out=20)),
                     round(seq(2, 200, length.out=20)),
                     round(seq(2,50,length.out=20)),
                     round(seq(2,50,length.out=20))),
                     nrow=2, ncol=40, byrow=T)
 output = abc_mcmc(obs, N_temp, sd, prior_params, epsilon, scale_ss)
-burn_in = 25000
-length(unique(output[,1]))/length(output[,1])*100
+length(unique(output[burn_in:N_temp,1]))/length(output[burn_in:N_temp,1])*100
 plot(output[burn_in:N_temp,1], type="l")
 plot(output[burn_in:N_temp,2], type="l")
 hist(output[burn_in:N_temp,1], prob=TRUE)

@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // abc_mcmc
-NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix prior_params, double epsilon, NumericMatrix scale_ss);
+NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix prior_params, NumericVector epsilon, NumericMatrix scale_ss);
 RcppExport SEXP _sbizombies_abc_mcmc(SEXP obsSEXP, SEXP NSEXP, SEXP sdSEXP, SEXP prior_paramsSEXP, SEXP epsilonSEXP, SEXP scale_ssSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -15,7 +15,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type N(NSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type sd(sdSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type prior_params(prior_paramsSEXP);
-    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type epsilon(epsilonSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type scale_ss(scale_ssSEXP);
     rcpp_result_gen = Rcpp::wrap(abc_mcmc(obs, N, sd, prior_params, epsilon, scale_ss));
     return rcpp_result_gen;

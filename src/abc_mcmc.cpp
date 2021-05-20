@@ -14,21 +14,6 @@ NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix
   int N_pop = 1000;
   int length_ss = (2*tf);
 
-  // // pilot run
-  // int N_pilot = 1000;
-  // NumericMatrix pilot_draws(N_pilot, length_theta);
-  // NumericMatrix pilot_ss(N_pilot, length_ss);
-  // double pilot_fir_param;
-  // double pilot_sec_param;
-  // for (int ii=0; ii<N_pilot; ii++) {
-  //   for (int jj = 0; jj < length_theta; jj++) {
-  //     pilot_fir_param = prior_params(jj,0);
-  //     pilot_sec_param = prior_params(jj,1);
-  //     pilot_draws(ii , jj) = R::runif(pilot_fir_param, pilot_sec_param);
-  //   }
-  // }
-  // pilot_ss = szr(pilot_draws, N_pop, tf, true);
-
   // scale obs
   NumericVector obs_scale(length_ss);
   obs_scale = (obs-scale_ss(0,_))/(scale_ss(1,_));
@@ -54,7 +39,7 @@ NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix
   double prior_num;
   double prior_den;
   for (int i = 1; i < N; i++) {
-    std::cout << i << std::endl;
+    // std::cout << i << std::endl;
     // find prop and old
     prop = prop_mech(chain(i-1 , _), sd);
     old = chain(i-1 , _);
@@ -68,7 +53,7 @@ NumericMatrix abc_mcmc(NumericVector obs, int N, NumericVector sd, NumericMatrix
 
     dist = distance(prop_ss, obs)(0); //calc distance
 
-    std::cout << dist << std::endl;
+    // std::cout << dist << std::endl;
 
     if (dist > epsilon(i)) {
       chain(i,_) = chain(i-1,_);

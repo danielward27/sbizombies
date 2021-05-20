@@ -13,7 +13,7 @@ abc_rej = function(prior, s, s_obs, q = 0.01) {
   scale_out = mean_and_sd(s)
   s_scaled = scaler(s, scale_out)
   s_obs_scaled = scaler(s_obs, scale_out)
-  
+
   # Calculate dists and reject
   dists = distance(s_scaled, s_obs_scaled)
   stopifnot(!any(is.na(dists)))
@@ -21,6 +21,8 @@ abc_rej = function(prior, s, s_obs, q = 0.01) {
   accept = dists < threshold_dist
   result = list(posterior = prior[accept, ],
                 s = s[accept, ],
+                s_mean = scale_out$mean,
+                s_sd = scale_out$sd,
                 threshold_used = threshold_dist)
   result
 }

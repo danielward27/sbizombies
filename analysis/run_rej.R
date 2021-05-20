@@ -1,0 +1,21 @@
+devtools::load_all("..")
+
+pbs_idx = as.integer(Sys.getenv(x = "PBS_ARRAY_INDEX"))
+if (is.na(pbs_idx)){
+  pbs_idx = 1 # So can run locally
+}
+
+n_sim = 1000000
+prior = cbind(runif(n_sim, 0, 5), runif(n_sim, 0, 5))
+
+s_obs = read.table(paste0("pods/pod_s_", pbs_idx, ".txt"))
+s_obs = as.vector(unlist(s_obs))
+
+s = szr(prior, N = 1000, tf = length(s_obs)/2, initial = FALSE)
+res = abc_rej(prior, s, s_obs, q = 0.05)
+
+outfile_posterior = paste0("rej_results/rej_posterior_", pbs_idx, ".txt")
+outfile_s = paste0("rej_results/rej_s_pod_", pbs_idx, ".txt")
+
+write.table(res$posterior, outfile_posterior, col.names = FALSE, row.names = FALSE)
+write.table(res$s, outfile_s, col.names = FALSE, row.names = FALSE)

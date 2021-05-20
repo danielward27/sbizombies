@@ -1,6 +1,7 @@
 #!/bin/env bash
-#PBS -l select=1:ncpus=1
-#PBS -l walltime=00:20:00
+#PBS -l nodes=1:ppn=1
+#PBS -l mem=10gb
+#PBS -l walltime=00:30:00
 #PBS -o ./logs/
 #PBS -e ./logs/
 #PBS -J 1-100

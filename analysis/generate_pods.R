@@ -6,7 +6,7 @@ while (i <= 100){
   theta = t(c(beta = runif(1, 0, 3), gamma = runif(1, 0, 3)))
   result = szr(theta, N = 1000, tf = 500)[1, ]
 
-  if (length(result) > 10 & length(result < 100)){
+  if (length(result) > 10 & length(result < 80)){
     pod_theta_filename = paste0("pods/pod_theta_", i, ".txt")
     pod_s_filename = paste0("pods/pod_s_", i, ".txt")
     write.table(theta, file = pod_theta_filename, row.names = FALSE, col.names = FALSE)

@@ -107,12 +107,11 @@ NumericMatrix szr(NumericMatrix theta, double N, double tf, bool initial = true)
 
 /*** R
 # initial
-theta = matrix(c(0.1,0.05),nrow=1)
+theta = matrix(c(0.1,0.05), nrow=1)
 
 for (i in 1:1000){
-  szr(theta,1000,500)
+  szr(theta,1000,500, FALSE)
 }
-
 
 ## training
 theta = matrix(runif(4),nrow=2)

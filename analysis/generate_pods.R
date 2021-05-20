@@ -9,9 +9,6 @@ while (i <= 100){
   if (length(result) > 10 & length(result < 100)){
     pod_theta_filename = paste0("pods/pod_theta_", i, ".txt")
     pod_s_filename = paste0("pods/pod_s_", i, ".txt")
-    
-    ?tryCatch
-    
     write.table(theta, file = pod_theta_filename, row.names = FALSE, col.names = FALSE)
     write.table(result, file = pod_s_filename, row.names = FALSE, col.names = FALSE)
     i = i+1

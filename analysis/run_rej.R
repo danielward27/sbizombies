@@ -15,12 +15,16 @@ s_obs = as.vector(unlist(s_obs))
 s = szr(prior, N = 1000, tf = length(s_obs)/2, initial = FALSE)
 res = abc_rej(prior, s, s_obs, q=0.001)
 
+scale = cbind(mean = res$s_mean, sd = res$s_sd)
+
+outfile_all_s =  paste0("sa_data/s_", pbs_idx, ".txt")
+outfile_all_theta =  paste0("sa_data/theta_", pbs_idx, ".txt")
 outfile_posterior = paste0("rej_results/rej_posterior_", pbs_idx, ".txt")
 outfile_s = paste0("rej_results/rej_s_", pbs_idx, ".txt")
 outfile_scale = paste0("rej_results/rej_scale_", pbs_idx, ".txt")
 
-scale = cbind(mean = res$s_mean, sd = res$s_sd)
-
+write.table(s, outfile_all_s, col.names = FALSE, row.names = FALSE)
+write.table(prior, outfile_all_theta, col.names = FALSE, row.names = FALSE)
 write.table(res$posterior, outfile_posterior, col.names = FALSE, row.names = FALSE)
 write.table(res$s, outfile_s, col.names = FALSE, row.names = FALSE)
 write.table(scale, outfile_scale, col.names = FALSE, row.names = FALSE)

@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-src/*.o
-src/*.so
-src/*.dll
-=======
 ### R template ###
 # History files
 .Rhistory
@@ -54,4 +45,9 @@ po/*~
 ### Other stuff ###
 analysis/logs/
 analysis/*results/
->>>>>>> 2ace2d67d3514a95f4643fe134d90d598ec5096a
+analysis/*data/
+
+
+src/*.o
+src/*.so
+src/*.dll

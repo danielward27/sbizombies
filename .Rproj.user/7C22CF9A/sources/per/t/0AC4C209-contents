@@ -1,5 +1,0 @@
-#ifndef _SIRC_H
-#define _SIRC_H
-Rcpp::NumericMatrix sirc(Rcpp::NumericMatrix theta, double N, double tf, bool initial = true);
-
-#endif

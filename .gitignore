@@ -45,6 +45,7 @@ po/*~
 ### Other stuff ###
 analysis/logs/
 analysis/*results/
+analysis/posterior_mean_parts/
 analysis/*data/
 
 

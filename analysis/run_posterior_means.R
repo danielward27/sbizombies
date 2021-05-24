@@ -11,7 +11,7 @@ for (algorithm in algorithms){
 
   posterior = read.table(results_path)
   posterior_means = colMeans(posterior)
-  write.table(posterior_means, outfile)
+  write.table(posterior_means, outfile, col.names = FALSE, row.names = FALSE)
 }
 
 

@@ -85,3 +85,26 @@ p2 = ggplot(df, aes(y = rmse, x = algorithm)) +
 ```{r}
 ggsave("plots/rmse_boxplot.png", p2, width = 6, height = 3.5, dpi = 600)
 ```
+
+
+## Logprob metric
+```{r}
+logprobs_df = read.csv("metrics/logprobs.csv")
+logprobs_df = logprobs_df %>%
+  pivot_longer(everything(), names_to = "algorithm", values_to = "negative_log_prob")
+```
+
+
+```{r}
+p3 = ggplot(logprobs_df, aes(y = negative_log_prob, x = algorithm)) +
+  geom_boxplot(fill = "lightgrey") +
+  stat_summary(fun=mean, geom="point", shape=4, size=3, color="black", fill="red") +
+  labs(x = "Algorithm", y = "Negative log-probability")
+  
+p3
+```
+
+```{r}
+ggsave("plots/neg_log_boxplot.png", p3, width = 6, height = 3.5, dpi = 600)
+```
+

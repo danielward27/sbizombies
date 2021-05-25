@@ -56,13 +56,28 @@ df = left_join(posterior_means, true_parameters, by = c("pod_idx", "parameter"))
 df$algorithm[df$algorithm == "rej"] = "rejection"
 ```
 
+## MCMC acceptance rate
+```{r}
+acceptance_rates = c()
+for (i in 1:100){
+  data_file = paste0("mcmc_results/mcmc_posterior_", i, ".txt")
+  df_ = read.table(data_file, col.names = c("beta", "gamma"))
+  acceptance_rates = c(acceptance_rates, length(unique(df_$beta))/length(df_$beta))
+}
+
+print(mean(acceptance_rates))
+print(median(acceptance_rates))
+```
+
+
 ## Plot predicted vs observed
 ```{r}
 p1 = ggplot(df, aes(true_parameters, inferred_parameter_value)) +
   geom_point() +
-  facet_grid(algorithm~parameter, scales = "fixed") +
+  facet_grid(parameter~algorithm, scales = "fixed") +
   geom_abline(slope=1, colour = "brown") +
   labs(x = "True parameter value", y = "Inferred parameter value")
+p1
 ```
 
 ```{r}
@@ -77,9 +92,10 @@ df$rmse = sqrt((df$inferred_parameter_value - df$true_parameters)^2)
 ```{r}
 p2 = ggplot(df, aes(y = rmse, x = algorithm)) +
   geom_boxplot(fill = "lightgrey") +
-  facet_wrap(~parameter) +
+  facet_wrap(~parameter, scales = "free") +
   stat_summary(fun=mean, geom="point", shape=4, size=3, color="black", fill="red") +
   labs(x = "Algorithm", y = "Root mean square error")
+p2
 ```
 
 ```{r}

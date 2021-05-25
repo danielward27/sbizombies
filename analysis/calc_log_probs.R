@@ -1,23 +1,11 @@
----
-title: "Compute Log Probs"
-author: "Jack Simons"
-date: "25/05/2021"
-output: pdf_document
----
-
-```{r setup, include=FALSE}
+## ----setup, include=FALSE---------------------------------------------------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
-```
 
-## Imports
-```{r message=FALSE}
+## ----message=FALSE----------------------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 theme_set(theme_bw())
-```
- 
- 
-## Read in pseudo-observed data
-```{r}
+
+## ---------------------------------------------------------------------------------------------------------------------------------------------------
 pod_list = list()
 for (i in 1:100){
   pod_file = paste0("pods/pod_theta_", i, ".txt")
@@ -26,10 +14,8 @@ for (i in 1:100){
 }
 
 true_parameters = do.call("rbind", pod_list)
-```
 
-## Calculate log probs
-```{r}
+## ---------------------------------------------------------------------------------------------------------------------------------------------------
 algorithms = c("rej", "mcmc")
 logprobs = data.frame(rej=rep(0,100), mcmc=rep(0,100))
 
@@ -47,12 +33,7 @@ for (algorithm in algorithms){
   }
 }
 
-logprobs
-```
-
-
-```{r}
+## ---------------------------------------------------------------------------------------------------------------------------------------------------
 logprobs = rename(logprobs, rejection = rej)
 write.csv(logprobs, "metrics/logprobs.csv", row.names = FALSE)
-```
 

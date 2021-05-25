@@ -10,8 +10,8 @@ burn_in = 2.5e5
 sd = c(1,1) #sds for the proposal dist
 
 prior_params = matrix(c(rep(0,2), rep(5, 2)), 2, 2) #params for the prior
-epsilon = c(seq(10000,1000,length.out=burn_in),
-            rep(1000,n_sim-burn_in))#value of epsilon for accp/rej  @@@@ READ FROM FILE
+epsilon = c(seq(10000,100,length.out=burn_in),
+            rep(100,n_sim-burn_in))#value of epsilon for accp/rej  @@@@ READ FROM FILE
 
 scale_file = paste0("rej_results/rej_scale_", pbs_idx,".txt")
 scale_ss = t(read.table(scale_file))
@@ -22,5 +22,4 @@ s_obs = as.vector(unlist(s_obs))
 res = abc_mcmc(s_obs, n_sim, sd, prior_params, epsilon, scale_ss)
 
 outfile_posterior = paste0("mcmc_results/mcmc_posterior_", pbs_idx, ".txt")
-
-write.table(res, outfile_posterior, col.names = FALSE, row.names = FALSE)
+write.table(res[(burn_in+1):n_sim,], outfile_posterior, col.names = FALSE, row.names = FALSE)

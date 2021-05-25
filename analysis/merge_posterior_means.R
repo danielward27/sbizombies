@@ -12,5 +12,3 @@ for (algorithm in algorithms){
   outfile = paste0("posterior_means/", algorithm, "_posterior_means.txt")
   write.table(alg_means, outfile, col.names = FALSE, row.names = FALSE)
 }
-
-

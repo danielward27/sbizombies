@@ -1,0 +1,48 @@
+---
+title: "Compute Log Probs"
+author: "Jack Simons"
+date: "25/05/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Imports
+```{r message=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+```
+ 
+ 
+## Read in pseudo-observed data
+```{r}
+pod_list = list()
+for (i in 1:100){
+  pod_file = paste0("pods/pod_theta_", i, ".txt")
+  data = read.table(pod_file, col.names = c("beta", "gamma"))
+  pod_list = append(pod_list, list(data))
+}
+
+true_parameters = do.call("rbind", pod_list)
+```
+
+## Calculate log probs
+```{r}
+algorithms = c("rej", "mcmc")
+logprobs = data.frame(rej=rep(0,100), mcmc=rep(0,100))
+
+data_list = list()
+for (algorithm in algorithms){
+  for (i in 1:100) {
+    data_file = paste0(algorithm, "_results/", algorithm, "_posterior_", i, ".txt")
+    alg_df = read.table(data_file, col.names = c("beta", "gamma"))
+    beta_dens = approxfun(density(alg_df[,1]))
+    gamma_dens = approxfun(density(alg_df[,2]))
+    beta_prob = beta_dens(true_parameters[i,1])
+    gamma_prob = gamma_dens(true_parameters[i,2])
+    logprobs$algorithm[i] = -log(beta_prob * gamma_prob)
+  }
+}
+```

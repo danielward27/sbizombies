@@ -58,14 +58,15 @@ df$algorithm[df$algorithm == "rej"] = "rejection"
 
 ## Plot predicted vs observed
 ```{r}
-ggplot(df, aes(true_parameters, inferred_parameter_value)) +
+p1 = ggplot(df, aes(true_parameters, inferred_parameter_value)) +
   geom_point() +
   facet_grid(algorithm~parameter, scales = "fixed") +
-  geom_abline(slop=1, colour = "brown") +
+  geom_abline(slope=1, colour = "brown") +
   labs(x = "True parameter value", y = "Inferred parameter value")
 ```
+
 ```{r}
-ggsave("plots/true_vs_predicted.png")
+ggsave("plots/true_vs_predicted.png", p1, width = 6, height = 3.5, dpi = 600)
 ```
 
 ## Plot RMSE
@@ -74,12 +75,13 @@ df$rmse = sqrt((df$inferred_parameter_value - df$true_parameters)^2)
 ```
 
 ```{r}
-ggplot(df, aes(y = rmse, x = algorithm)) +
+p2 = ggplot(df, aes(y = rmse, x = algorithm)) +
   geom_boxplot(fill = "lightgrey") +
   facet_wrap(~parameter) +
-  stat_summary(fun.y=mean, geom="point", shape=4, size=3, color="black", fill="red") +
+  stat_summary(fun=mean, geom="point", shape=4, size=3, color="black", fill="red") +
   labs(x = "Algorithm", y = "Root mean square error")
 ```
+
 ```{r}
-ggsave("plots/rmse_boxplot.png")
+ggsave("plots/rmse_boxplot.png", p2, width = 6, height = 3.5, dpi = 600)
 ```

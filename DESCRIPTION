@@ -5,7 +5,9 @@ Version: 1.0
 Date: 2021-05-20
 Author: Sam Stockman, Annie Gray, Jack Simons, Daniel Ward
 Maintainer: Dan Ward dw16200@bristol.ac.uk
-Description: We create functions that both simulate data from an SIR model (here SZR since we are modelling a hypothetical zombie outbreak) as well as functions that are used in performing Rejection ABC, Monte Carlo Markov Chain ABC and Semiautomatic ABC. The backend of the package has been written using Rcpp to give substantial computational speedup.
+Description: We create functions that both simulate data from an SIR model (here SZR since we are modelling a hypothetical zombie outbreak) 
+                    as well as functions that are used in performing Rejection ABC, Monte Carlo Markov Chain ABC and Semiautomatic ABC. 
+                    The backend of the package has been written using Rcpp to give substantial computational speedup.
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.6)
 LinkingTo: Rcpp

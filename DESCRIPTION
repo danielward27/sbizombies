@@ -1,6 +1,6 @@
 Package: sbizombies
 Type: Package
-Title: Implementation of Approximate Bayesian Computational methods on SIR model for epidemiology.
+Title: Simulation-based inference on zombie outbreak models
 Version: 1.0
 Date: 2021-05-20
 Author: Sam Stockman, Annie Gray, Jack Simons, Daniel Ward

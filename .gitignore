@@ -47,6 +47,8 @@ analysis/logs/
 analysis/*results/
 analysis/posterior_mean_parts/
 analysis/*data/
+analysis/nn_output/
+
 
 
 src/*.o

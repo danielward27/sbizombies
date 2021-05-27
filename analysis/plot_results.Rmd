@@ -33,7 +33,7 @@ true_parameters = true_parameters %>%
 
 ## Read in predicted means
 ```{r}
-algorithms = c("rej", "mcmc")
+algorithms = c("rej", "mcmc", "sa")
 
 data_list = list()
 for (algorithm in algorithms){
@@ -53,8 +53,16 @@ posterior_means
 ## Combine both data frames
 ```{r}
 df = left_join(posterior_means, true_parameters, by = c("pod_idx", "parameter"))
-df$algorithm[df$algorithm == "rej"] = "rejection"
+df$algorithm[df$algorithm == "rej"] = "ABC-Rej"
+df$algorithm[df$algorithm == "mcmc"] = "ABC-MCMC"
+df$algorithm[df$algorithm == "sa"] = "ABC-SA"
 ```
+
+## For plooting change factors 
+```{r}
+df$algorithm = factor(df$algorithm, levels = c("ABC-Rej", "ABC-MCMC", "ABC-SA"))
+```
+
 
 ## MCMC acceptance rate
 ```{r}
@@ -65,8 +73,7 @@ for (i in 1:100){
   acceptance_rates = c(acceptance_rates, length(unique(df_$beta))/length(df_$beta))
 }
 
-print(mean(acceptance_rates))
-print(median(acceptance_rates))
+print(mean(acceptance_rates, trim = 0.05))
 ```
 
 
@@ -86,28 +93,33 @@ ggsave("plots/true_vs_predicted.png", p1, width = 6, height = 3.5, dpi = 600)
 
 ## Plot RMSE
 ```{r}
-df$rmse = sqrt((df$inferred_parameter_value - df$true_parameters)^2)
+df$absolute_error = abs(df$inferred_parameter_value - df$true_parameters)
 ```
 
 ```{r}
-p2 = ggplot(df, aes(y = rmse, x = algorithm)) +
+p2 = ggplot(df, aes(y = absolute_error, x = algorithm)) +
   geom_boxplot(fill = "lightgrey") +
-  facet_wrap(~parameter, scales = "free") +
+  facet_wrap(~parameter) +
   stat_summary(fun=mean, geom="point", shape=4, size=3, color="black", fill="red") +
-  labs(x = "Algorithm", y = "Root mean square error")
+  labs(x = "Algorithm", y = "Absolute error")
 p2
 ```
 
 ```{r}
-ggsave("plots/rmse_boxplot.png", p2, width = 6, height = 3.5, dpi = 600)
+ggsave("plots/absolute_error_boxplot.png", p2, width = 6, height = 3.5, dpi = 600)
 ```
 
 
 ## Logprob metric
 ```{r}
 logprobs_df = read.csv("metrics/logprobs.csv")
+
+logprobs_df = logprobs_df %>% rename("ABC-Rej" = rejection, "ABC-MCMC" = mcmc, "ABC-SA" = semi_automatic)
+
 logprobs_df = logprobs_df %>%
   pivot_longer(everything(), names_to = "algorithm", values_to = "negative_log_prob")
+
+logprobs_df$algorithm = factor(logprobs_df$algorithm, levels = c("ABC-Rej", "ABC-MCMC", "ABC-SA"))
 ```
 
 
@@ -123,4 +135,36 @@ p3
 ```{r}
 ggsave("plots/neg_log_boxplot.png", p3, width = 6, height = 3.5, dpi = 600)
 ```
+
+
+## Tables for report
+```{r}
+df %>%
+  group_by(parameter, algorithm) %>%
+  summarise("mean RMSE" = mean(rmse, na.rm = TRUE)) %>%
+  pivot_wider(names_from = parameter, values_from = `mean RMSE`)
+
+```
+
+
+```{r}
+logprobs_df %>%
+  group_by(algorithm) %>%
+  summarise("mean negative log-probability" = mean(negative_log_prob, na.rm = TRUE))
+```
+
+
+## Average length of the true summary statistics
+```{r}
+n_s = c()
+for (i in 1:100){
+  pod_file = paste0("pods/pod_s_", i, ".txt")
+  sum_stats = read.table(pod_file)
+  n_s = c(n_s, nrow(sum_stats))
+}
+print(min(n_s))
+print(max(n_s))
+print(mean(n_s))
+```
+
 

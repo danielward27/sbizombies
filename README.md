@@ -1,5 +1,5 @@
 # sbizombies
-A Package for Simulation-based inference on zombie outbreak models.
+An R Package for Simulation-based inference on zombie outbreak models.
 
 
 We create functions that both simulate data from an SIR model (here SZR since we are modelling a hypothetical zombie outbreak) 
